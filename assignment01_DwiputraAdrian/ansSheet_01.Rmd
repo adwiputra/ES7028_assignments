@@ -1,0 +1,53 @@
+---
+title: '[ES7028] Assignment 01'
+author: "Adrian Dwiputra"
+date: "2022-08-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Squirrel Data
+
+In a study of squirrels, the weight of 50 female and 50 male squirrels was measured. The observations are in the columns FEMALE and MALE (Squirrels dataset).
+
+1A. Plot the data using histogram(s) and boxplot(s).
+```{r histoBox_squirrel, echo=FALSE}
+# 0. LOAD RELEVANT LIBRARIES======
+library(readxl)
+library(tidyverse)
+# Read the data
+squirrelData <- "Assignment_1data.xls" %>% read_excel() # %>% mutate(id = 1:nrow(squirrelData))
+# Reshape the data
+squirrelData <- squirrelData %>% pivot_longer(cols = 1:2, names_to = "Sex", values_to = "weight") %>% mutate(Sex = as.factor(Sex))
+ggplot(squirrelData, aes(x = weight, fill = Sex)) + geom_histogram(binwidth = 0.04, alpha = .5, position = "identity")
+# box plot
+ggplot(squirrelData) + geom_boxplot(aes(x = Sex, y = weight), notch = TRUE)
+```
+1B. Perform a two-sample t-test and a Mann-Whitney test.
+
+1C. What features of the plots suggest that the use of a parametric test may be unwise?
+
+1D. From the results of the (parametric) t-test, report the t, dfs, and p-values, and interpret them.
+
+1E. From the results of the (non-parametric) Mann-Whitney test, report the W, and p-values, and interpret them.
+
+1F. What type of error do you get if you use a t-test?
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
